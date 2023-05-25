@@ -1,0 +1,54 @@
+verbatim:
+  cabal-version: 3.0
+
+name:                peano
+version:             0.1.0.0
+github:              "asr/peano"
+# license:             BSD3
+author:              "Andrés Sicard-Ramírez"
+maintainer:          "andres.sicard.ramirez@gmail.com"
+copyright:           "Andrés Sicard-Ramírez"
+
+extra-source-files:
+- README.md
+# - CHANGELOG.md
+
+# Metadata used when publishing your package
+# synopsis:            Short description of your package
+# category:            Web
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+description:         Please see the README on GitHub at <https://github.com/asr/peano#readme>
+
+tested-with:
+  GHC == { 9.6.2 }
+
+dependencies:
+- QuickCheck >= 2.14.2   && < 2.15
+- base       >= 4.17.1.0 && < 5
+
+ghc-options:
+- -Werror
+- -Weverything
+- -Wno-all-missed-specialisations
+- -Wno-implicit-prelude
+- -Wno-missing-deriving-strategies
+- -Wno-missing-kind-signatures
+- -Wno-missing-safe-haskell-mode
+- -Wno-safe
+
+library:
+  source-dirs: src
+
+tests:
+  peano-test:
+    main:                Main.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - peano
