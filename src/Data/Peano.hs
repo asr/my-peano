@@ -1,16 +1,14 @@
 -----------------------------------------------------------------------------
 -- |
 -- Module      : Data.Peano
--- Copyright   : (c) Andrés Sicard-Ramírez 2009-2014
+-- Copyright   : (c) Andrés Sicard-Ramírez 2009-2023
 -- License     : See the file LICENSE.
 --
--- Maintainer  : Andrés Sicard-Ramírez <asr@eafit.edu.co>
+-- Maintainer  : Andrés Sicard-Ramírez <andres.sicard.ramirez@mail.com>
 -- Stability   : experimental
 --
 -- Peano numbers.
 -----------------------------------------------------------------------------
-
-{-# LANGUAGE UnicodeSyntax #-}
 
 module Data.Peano
   ( int2nat
@@ -27,7 +25,7 @@ import Test.QuickCheck
 -----------------------------------------------------------------------------
 -- Auxiliary functions
 
-mapTuple ∷ (a → b) → (a, a) → (b, b)
+mapTuple :: (a -> b) -> (a, a) -> (b, b)
 mapTuple f (a1, a2) = (f a1, f a2)
 
 -----------------------------------------------------------------------------
@@ -41,20 +39,20 @@ mapTuple f (a1, a2) = (f a1, f a2)
 data PeanoNat = Z | S PeanoNat
               deriving (Eq, Ord)
 
-nat2integer ∷ PeanoNat → Integer
+nat2integer :: PeanoNat -> Integer
 nat2integer Z     = 0
 nat2integer (S n) = 1 + nat2integer n
 
-nat2int ∷ PeanoNat → Int
+nat2int :: PeanoNat -> Int
 nat2int Z     = 0
 nat2int (S n) = 1 + nat2int n
 
-int2nat ∷ Int → PeanoNat
+int2nat :: Int -> PeanoNat
 int2nat n | n < 0 = error "int2Nat: negative argument"
 int2nat 0         = Z
 int2nat n         = S $ int2nat (n - 1)
 
-integer2nat ∷ Integer → PeanoNat
+integer2nat :: Integer -> PeanoNat
 integer2nat n | n < 0 = error "integer2Nat: negative argument"
 integer2nat 0         = Z
 integer2nat n         = S $ integer2nat (n - 1)
