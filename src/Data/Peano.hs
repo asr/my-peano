@@ -12,10 +12,14 @@
 
 module Data.Peano
   ( Nat(Z, S)
+  , fromNatural
   , int2nat
   , nat2int
+  , toNatural
   )
 where
+
+import Numeric.Natural ( Natural )
 
 import Test.QuickCheck
   ( Arbitrary(arbitrary)
@@ -39,6 +43,7 @@ mapTuple f (a1, a2) = (f a1, f a2)
 data Nat = Z | S Nat
          deriving (Eq, Ord)
 
+
 nat2integer :: Nat -> Integer
 nat2integer Z     = 0
 nat2integer (S n) = 1 + nat2integer n
@@ -56,6 +61,14 @@ integer2nat :: Integer -> Nat
 integer2nat n | n < 0 = error "integer2Nat: negative argument"
 integer2nat 0         = Z
 integer2nat n         = S $ integer2nat (n - 1)
+
+fromNatural :: Natural -> Nat
+fromNatural 0 = Z
+fromNatural n = S (fromNatural $ pred n)
+
+toNatural :: Nat -> Natural
+toNatural Z     = 0
+toNatural (S n) = succ $ toNatural n
 
 -- Adapted from http://byorgey.wordpress.com/2010/11/.
 instance Num Nat where
@@ -104,7 +117,7 @@ instance Integral Nat where
   toInteger = nat2integer
 
 instance Show Nat where
-  show = show . nat2integer
+  show = show . toNatural
 
 instance Arbitrary Nat where
   arbitrary = arbitrarySizedNatural
