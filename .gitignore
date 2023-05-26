@@ -1,7 +1,6 @@
 .stack-work/
 dist/
 dist-newstyle/
-my-peano.cabal
 stack.yaml
 stack.yaml.lock
 
