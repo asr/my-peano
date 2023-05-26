@@ -1,9 +1,9 @@
 verbatim:
   cabal-version: 3.0
 
-name:                peano
+name:                my-peano
 version:             0.1.0.0
-github:              "asr/peano"
+github:              "asr/my-peano"
 # license:             BSD3
 author:              "Andrés Sicard-Ramírez"
 maintainer:          "andres.sicard.ramirez@gmail.com"
@@ -43,7 +43,7 @@ library:
   source-dirs: src
 
 tests:
-  peano-test:
+  my-peano-test:
     main:                Main.hs
     source-dirs:         test
     ghc-options:
@@ -51,4 +51,4 @@ tests:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - peano
+    - my-peano
