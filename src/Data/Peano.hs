@@ -11,8 +11,8 @@
 -----------------------------------------------------------------------------
 
 module Data.Peano
-  ( int2nat
-  , PeanoNat(Z, S)
+  ( Nat(Z, S)
+  , int2nat
   , nat2int
   )
 where
@@ -36,29 +36,29 @@ mapTuple f (a1, a2) = (f a1, f a2)
 -- first.
 
 -- | Peano natural numbers.
-data PeanoNat = Z | S PeanoNat
-              deriving (Eq, Ord)
+data Nat = Z | S Nat
+         deriving (Eq, Ord)
 
-nat2integer :: PeanoNat -> Integer
+nat2integer :: Nat -> Integer
 nat2integer Z     = 0
 nat2integer (S n) = 1 + nat2integer n
 
-nat2int :: PeanoNat -> Int
+nat2int :: Nat -> Int
 nat2int Z     = 0
 nat2int (S n) = 1 + nat2int n
 
-int2nat :: Int -> PeanoNat
+int2nat :: Int -> Nat
 int2nat n | n < 0 = error "int2Nat: negative argument"
 int2nat 0         = Z
 int2nat n         = S $ int2nat (n - 1)
 
-integer2nat :: Integer -> PeanoNat
+integer2nat :: Integer -> Nat
 integer2nat n | n < 0 = error "integer2Nat: negative argument"
 integer2nat 0         = Z
 integer2nat n         = S $ integer2nat (n - 1)
 
 -- Adapted from http://byorgey.wordpress.com/2010/11/.
-instance Num PeanoNat where
+instance Num Nat where
   Z   + n = n
   S m + n = S (m + n)
 
@@ -84,10 +84,10 @@ instance Num PeanoNat where
                   then error "fromInteger: negative value"
                   else S (fromInteger (n - 1))
 
-instance Real PeanoNat where
+instance Real Nat where
   toRational = toRational . nat2integer
 
-instance Enum PeanoNat where
+instance Enum Nat where
   fromEnum = fromEnum . nat2int
 
   toEnum 0 = Z
@@ -95,7 +95,7 @@ instance Enum PeanoNat where
              then S (toEnum (n - 1))
              else error "toEnum: negative value"
 
-instance Integral PeanoNat where
+instance Integral Nat where
   quotRem m n = mapTuple integer2nat $ quotRem (nat2integer m) (nat2integer n)
 
   -- TODO (07 July 2014). Why is this definition necessary?
@@ -103,8 +103,8 @@ instance Integral PeanoNat where
 
   toInteger = nat2integer
 
-instance Show PeanoNat where
+instance Show Nat where
   show = show . nat2integer
 
-instance Arbitrary PeanoNat where
+instance Arbitrary Nat where
   arbitrary = arbitrarySizedNatural
