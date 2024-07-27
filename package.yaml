@@ -23,10 +23,10 @@ extra-source-files:
 description:         Please see the README on GitHub at <https://github.com/asr/peano#readme>
 
 tested-with:
-  GHC == { 9.8.1 }
+  GHC == { 9.8.2 }
 
 dependencies:
-- QuickCheck >= 2.14.3   && < 2.15
+- QuickCheck >= 2.14.3   && < 2.16
 - base       >= 4.19.0.0 && < 5
 
 ghc-options:
