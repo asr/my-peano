@@ -16,7 +16,7 @@ license:        MIT
 license-file:   LICENSE
 build-type:     Simple
 tested-with:
-    GHC == { 9.10.1 }
+    GHC == { 9.10.2 }
 extra-source-files:
     README.md
 
