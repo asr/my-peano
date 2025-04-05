@@ -1,7 +1,7 @@
 -----------------------------------------------------------------------------
 -- |
 -- Module      : Data.Peano
--- Copyright   : (c) Andrés Sicard-Ramírez 2009-2023
+-- Copyright   : (c) Andrés Sicard-Ramírez 2009-2025
 -- License     : See the file LICENSE.
 --
 -- Maintainer  : Andrés Sicard-Ramírez <andres.sicard.ramirez@mail.com>
@@ -11,7 +11,7 @@
 -----------------------------------------------------------------------------
 
 module Data.Peano
-  ( Nat(Z, S)
+  ( Nat(Zero, Succ)
   , fromNatural
   , int2nat
   , nat2int
@@ -40,47 +40,47 @@ mapTuple f (a1, a2) = (f a1, f a2)
 -- first.
 
 -- | Peano natural numbers.
-data Nat = Z | S Nat
+data Nat = Zero | Succ Nat
          deriving (Eq, Ord)
 
 
 nat2integer :: Nat -> Integer
-nat2integer Z     = 0
-nat2integer (S n) = 1 + nat2integer n
+nat2integer Zero     = 0
+nat2integer (Succ n) = 1 + nat2integer n
 
 nat2int :: Nat -> Int
-nat2int Z     = 0
-nat2int (S n) = 1 + nat2int n
+nat2int Zero     = 0
+nat2int (Succ n) = 1 + nat2int n
 
 int2nat :: Int -> Nat
 int2nat n | n < 0 = error "int2Nat: negative argument"
-int2nat 0         = Z
-int2nat n         = S $ int2nat (n - 1)
+int2nat 0         = Zero
+int2nat n         = Succ $ int2nat (n - 1)
 
 integer2nat :: Integer -> Nat
 integer2nat n | n < 0 = error "integer2Nat: negative argument"
-integer2nat 0         = Z
-integer2nat n         = S $ integer2nat (n - 1)
+integer2nat 0         = Zero
+integer2nat n         = Succ $ integer2nat (n - 1)
 
 fromNatural :: Natural -> Nat
-fromNatural 0 = Z
-fromNatural n = S (fromNatural $ pred n)
+fromNatural 0 = Zero
+fromNatural n = Succ (fromNatural $ pred n)
 
 toNatural :: Nat -> Natural
-toNatural Z     = 0
-toNatural (S n) = succ $ toNatural n
+toNatural Zero     = 0
+toNatural (Succ n) = succ $ toNatural n
 
 -- Adapted from http://byorgey.wordpress.com/2010/11/.
 instance Num Nat where
-  Z   + n = n
-  S m + n = S (m + n)
+  Zero   + n = n
+  Succ m + n = Succ (m + n)
 
-  Z   * _ = Z
-  S m * n = n + m * n
+  Zero   * _ = Zero
+  Succ m * n = n + m * n
 
-  m   - Z   = m
-  Z   - S _ = Z
-  S m - S n = m - n
+  m      - Zero   = m
+  Zero   - Succ _ = Zero
+  Succ m - Succ n = m - n
 
   abs n = n
 
@@ -89,13 +89,13 @@ instance Num Nat where
   -- https://downloads.haskell.org/~ghc/7.8.4/docs/html/libraries/base-4.7.0.2/src/GHC-Real.html#div
   negate n = n
 
-  signum Z     = 0
-  signum (S _) = 1
+  signum Zero     = 0
+  signum (Succ _) = 1
 
-  fromInteger 0 = Z
+  fromInteger 0 = Zero
   fromInteger n = if n < 0
                   then error "fromInteger: negative value"
-                  else S (fromInteger (n - 1))
+                  else Succ (fromInteger (n - 1))
 
 instance Real Nat where
   toRational = toRational . nat2integer
@@ -103,9 +103,9 @@ instance Real Nat where
 instance Enum Nat where
   fromEnum = fromEnum . nat2int
 
-  toEnum 0 = Z
+  toEnum 0 = Zero
   toEnum n = if n > 0
-             then S (toEnum (n - 1))
+             then Succ (toEnum (n - 1))
              else error "toEnum: negative value"
 
 instance Integral Nat where
